@@ -11,6 +11,7 @@ import json
 import requests
 import re
 import os
+from config import *
 
 from fontTools.ttLib import TTFont
 
@@ -24,7 +25,7 @@ HASH_TABLE = 'dianping:font'
 
 class ParseFontClass:
 
-    def __init__(self, css_url, redis_host='127.0.0.1', redis_port=6379, redis_pass=None):
+    def __init__(self, proxies, headers, redis_host='127.0.0.1', redis_port=6379, redis_pass=None):
         """
         redis 默认链接本机
         :param redis_host: redis 链接地址
@@ -37,19 +38,20 @@ class ParseFontClass:
         else:
             pool = redis.ConnectionPool(host=redis_host, port=redis_port, decode_responses=True)
         self.r = redis.Redis(connection_pool=pool)
-        with open('font.json', 'r', encoding='utf-8') as f:
+        with open('./utils/font.json', 'r', encoding='utf-8') as f:
             data = json.load(f)
         self.FONT_LIST = data.get('FONT_LIST')
-        self.css_url = css_url
-        self.start()
+        self.css_url = None
+        self.proxies = proxies
+        self.headers = headers
+        # self.start()
 
     def parse_ttf(self, code):
-        clean_code = code.replace(';', '')[-4:]  # 只提取匹配区域
         result_list = self.r.hmget(HASH_TABLE, self.name_list)  # 取出对应字库表（已修复bug）
         for result in result_list:
             json_data = json.loads(result)
-            if 'uni' + clean_code in json_data:
-                return json_data['uni' + clean_code]
+            if 'uni' + code in json_data:
+                return json_data['uni' + code]
         return False
 
     def add_hash(self, name, json_data):
@@ -65,14 +67,11 @@ class ParseFontClass:
     def get_ttf(self, css_url):
         """获取字体链接
         """
-        headers = {
-            'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36'
-        }
-        result = requests.get(css_url, headers=headers)
+        result = requests.get(css_url, proxies=self.proxies)
         if result.status_code == 200:
             self.install_ttf(self.get_ttf_urls(result.text))
         else:
-            return None
+            print("加载字库失败！" + css_url)
 
     def install_ttf(self, ttf_list):
         """安装字体
@@ -90,7 +89,7 @@ class ParseFontClass:
                 uni_list = font['cmap'].tables[0].ttFont.getGlyphOrder()  # 取出字形保存到uniList中
                 json_data = json.dumps(dict(zip(uni_list, self.FONT_LIST)), ensure_ascii=False)
                 self.add_hash(name, json_data)
-                os.remove(name + '.woff')  # 用完了删掉，节省资源占用
+                # os.remove(name + '.woff')  # 用完了删掉，节省资源占用
 
     @staticmethod
     def get_ttf_urls(text):

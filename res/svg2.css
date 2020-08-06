@@ -1,0 +1,39 @@
+@font-face {
+    font-family: "PingFangSC-Regular-reviewTag";
+    src: url("//s3plus.meituan.net/v1/mss_73a511b8f91f43d0bdae92584ea6330b/font/0b2c034e.eot");
+    src: url("//s3plus.meituan.net/v1/mss_73a511b8f91f43d0bdae92584ea6330b/font/0b2c034e.eot?#iefix") format("embedded-opentype"), url("//s3plus.meituan.net/v1/mss_73a511b8f91f43d0bdae92584ea6330b/font/0b2c034e.woff");
+}
+
+.reviewTag {
+    font-family: 'PingFangSC-Regular-reviewTag';
+}
+
+@font-face {
+    font-family: "PingFangSC-Regular-tagName";
+    src: url("//s3plus.meituan.net/v1/mss_73a511b8f91f43d0bdae92584ea6330b/font/f983b715.eot");
+    src: url("//s3plus.meituan.net/v1/mss_73a511b8f91f43d0bdae92584ea6330b/font/f983b715.eot?#iefix") format("embedded-opentype"), url("//s3plus.meituan.net/v1/mss_73a511b8f91f43d0bdae92584ea6330b/font/f983b715.woff");
+}
+
+.tagName {
+    font-family: 'PingFangSC-Regular-tagName';
+}
+
+@font-face {
+    font-family: "PingFangSC-Regular-address";
+    src: url("//s3plus.meituan.net/v1/mss_73a511b8f91f43d0bdae92584ea6330b/font/5ffd5592.eot");
+    src: url("//s3plus.meituan.net/v1/mss_73a511b8f91f43d0bdae92584ea6330b/font/5ffd5592.eot?#iefix") format("embedded-opentype"), url("//s3plus.meituan.net/v1/mss_73a511b8f91f43d0bdae92584ea6330b/font/5ffd5592.woff");
+}
+
+.address {
+    font-family: 'PingFangSC-Regular-address';
+}
+
+@font-face {
+    font-family: "PingFangSC-Regular-shopNum";
+    src: url("//s3plus.meituan.net/v1/mss_73a511b8f91f43d0bdae92584ea6330b/font/0b2c034e.eot");
+    src: url("//s3plus.meituan.net/v1/mss_73a511b8f91f43d0bdae92584ea6330b/font/0b2c034e.eot?#iefix") format("embedded-opentype"), url("//s3plus.meituan.net/v1/mss_73a511b8f91f43d0bdae92584ea6330b/font/0b2c034e.woff");
+}
+
+.shopNum {
+    font-family: 'PingFangSC-Regular-shopNum';
+}
